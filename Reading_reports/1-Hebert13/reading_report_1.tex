@@ -1,0 +1,44 @@
+\documentclass[a4paper, 10pt]{article}
+
+\usepackage[utf8]{inputenc}
+
+\title{Reading Report: Hebert13}
+\author{\textbf{Eric Casanovas}}
+\date{\normalsize\today{}}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  Upload your report in PDF format.
+  
+  Use this LaTeX template to format the report, keeping the proposed headers.
+  
+	The length of the report must not exceed \textbf{5 pages}.
+\end{center}
+
+\section{Summary}
+
+En aquest text està extret d'un llibre escrit per Fred Hébert que té com a propòsit ensenyar coneixements bàsics sobre el llenguatge de programació Erlang. \newline
+\newline
+En aquest text trobem que Hebert ens comenta les fal·làcies dels sistemes distribuïts que fan servir Erlang:
+\begin{itemize}
+\item Fiabilitat de la xarxa: La xarxa mai és 100\% fiable perquè pot caure algun node o que es trenqui el hardware, això ens provocarà que es perdin missatges. Erlang en aquest sentit en ser un llenguatge asíncron, ha d'establir un mecanisme per monitoritzar els nodes i saber si algun està caigut o no.
+\item Latència: Tendim a pensar que els missatges s'envien instantàniament, però realment no és així i hi ha un temps per a què s'enviï un missatge. Per sort Erlang pel fet de ser asíncron ja interpreta que els missatges no són instantanis però tot i això s'ha d'anar amb compte.
+\item Ample de banda: Hem de pensar que l'ample de banda no és infinit a un sistema, per aquesta raó hem d'intentar no enviar missatges gaire llargs, perquè Erlang quan envies un missatge bloqueja el canal pels altres missatges. Per tant no podrà enviar els \textit{heartbeats} que són petits missatges entre 2 nodes per saber que els 2 segueixen connectats.
+\item Seguretat: Erlang com a llenguatge no té res de seguretat, per tant no és gens recomanable per comunicar 2 data centers sense afegir-li seguretat, com podria ser per SSL, implementant la seva pròpia high-level communication layer, fer tunneling per canals segurs o reimplementar els protocols de seguretat entre nodes.
+\item Topologia: Seria un error hardcode IPs o hostnames ja que el hardware sempre pot espatllar-se i això faria més complicat arreglar la xarxa.
+\item Administrador: En un sistema distribuït podria haver-hi més d'un administrador a la xarxa, això és pel fet que un sistema de vàries companyies puguin administrar-se la seva part del sistema com fer actualitzacions del software.
+\item Transport: El cost del transport no és 0, ja que tindrem un cost tant en temps com en diners. Per aquesta raó per optimitzar millor el cost de transport haurem d'enviar missatges petits, ja que serà més barat comprar memòria que ample de banda.
+\item Homogeneïtat de la xarxa: No podem donar per segur que tots els elements de la xarxa siguin iguals. Per tant hem hagut de tenir en compte de "traduir" el missatge abans que arribi al node desitjat al llenguatge que entengui el node de destí. Per això podem fer servir BERT o BERT-RPC que és un format d'intercanvi entre XML i JSON.
+\end{itemize}
+
+\section{Assessment}
+
+En la meva opinió el text ha sigut de fàcil lectura i fàcil de comprendre, a més a més de ser un text interessant per conèixer una mica més sobre Erlang i els sistemes distribuïts.
+
+\end{document}
+
+
+
