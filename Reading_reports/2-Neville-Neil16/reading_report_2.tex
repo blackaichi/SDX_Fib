@@ -1,0 +1,58 @@
+\documentclass[a4paper, 10pt]{article}
+
+\usepackage[utf8]{inputenc}
+
+\title{Reading Report: Neville-Neil16}
+\author{\textbf{Eric Casanovas}}
+\date{\normalsize\today{}}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  Upload your report in PDF format.
+  
+  Use this LaTeX template to format the report, keeping the proposed headers.
+  
+	The length of the report must not exceed \textbf{5 pages}.
+\end{center}
+
+\section{Summary}
+
+Una de les coses més sorprenents dels sistemes digitals es com de malament manentenen el temps, això no es problema en un únic sistema, però si ho es en un sistema distribuit. Tot es centra en 2 termes:
+\begin{enumerate}
+    \item Sincronització: Com d'aprop estan 2 rellotges al mateix moment, on cada moment poden ser el mateix segon, milisegon, nanosegon, etc... Depenent de la precisió que vulguem.
+    \item Sintonització: La qualitat de poder ficar a l'hora un rellotge determinat. No podem assumir que el rellotge anirà perfectament ja que hi han molts factors que el poden fer fallar. ELs ordinadors fan servir cristalls de quars per fer totes les operacions. Aquests cristalls sofreixen canvis degut a la temperatura (més calent més ràpid i més fred més lent), el corrent, el temps de vida o la seva qualitat (com més bo més car), a més de no ser tots els cristalls exactament iguals.
+\end{enumerate}
+
+Per corregir la sincronització el sistema operatiu té un conjunt de rutines per corregir el rellotge. Es podria pensar que es poden comprar cristalls amb més qualitat pels nostres sistemes però això no és possible avui dia degut a les poques empreses que es dediquen a crear sistemes distribuits i també degut al cost de comprar millor hardware. Un altra opció podria ser tenir unclock extern connectat a tots els ordinadors, però igualment seria una solució massa cara.
+
+\begin{itemize}
+    \item What Time Is It Now? \newline 
+    Tenim la crida \textit{gettimeofday()} per tenir un temps aproximat en el moment de fer la crida, però tenim 2 rutines més interesants que són \textit{clock\_gettime()} i \textit{clock\_getres}. A freeBSD tenim varies rutines com son: CLOCK\_REALTIME, CLOCK\_MONOTONICCLOCK\_UPTIME, CLOCK\_VIRTUAL i CLOCK\_PROF. Cadascuna d'aquestes te una versió FAST que et retorna una resposta ràpida però no molt precisa i una versió PRECISE que és més precisa però més lenta. Linux també té un \textit{clock\_gettime()} al igual que windows (GetLocalTime()) però en canvi mac OS no. Alguns CPU de intel tenen un contador (rdtsc) per poder calcular temps en local.
+    
+    \item Find a Better Clock \newline 
+    Podem buscar la solució del rellotge a la xarxa mitjançant NTP, que es un sistema distribuit de clocks que tenen diferentes qualitats formant una jerarquia on els millors tenen un numero de stratum més baix, on el numero 0 es el clock de referencia i a ell estan connectats els numero 1 i així successivament fins al 15. NTP pot permetre tenir precisions de més de milisegons.
+    
+    \item Datacenter Time \newline
+    Els sistemes distribuits han agafat un sistema de sincronització de sistemes en automatització de fàbriques, generació d'energía elèctrica i xarxes cel·lulars, el Precision Time Protocol (PTP) per aconseguir major precisió i que actualment esta fet servir als HFT (high-frequency trading). PTP esta fet per fer-se servir en únicament 1 xarxa i a més a més que no hi hagin salts de routers o switch entre varis sistemes. Però, NTP es millor en el cas de voler un protocol basat en internet. \newline
+    PTP esta dissenyat com un protocol multicast on hi ha un grandmaster que envia una senyal de SYNC cada segon, Els slaves periodicament envien un multicast DELAY\_REQUEST packet, als quals el grandmaster respon amb un DELAY\_RESPONSE. Això permet una sincronització dels clocks al grandmaster. PTP assumeix que triga el mateix en demanar que en respondre, PTPd pot ser configurat per calcular el delay. Aquest delay pot arribar a provocar un error en comptes de 1 milisegon arribi a ser de 10.
+    Una solució per oferir temps exacte als servidors, al mateix temps que els permet accedir a un alt ample de banda
+    connexions, és utilitzar el port de xarxa del servidor a 1Gbps durant el temps de servei i 10 Gbps per a dades. Proporcionant dues connexions de xarxa per a cadascuna
+    Si les dades de temps s'aplica a la xarxa administrativa, llavors els paquets PTP han de ser posats a la seva pròpia LAN virtual amb major qualitat de servei que les dades administratives. 
+    
+    \item Marching On \newline
+    La sincronització en submicrosegons entre un gran grup de hosts és un èxit significatiu, però serà necessari millors nivells de sincronització per futures aplicacions. La proliferació de 10Gbps Ethernet en centres de dades
+    i la perspectiva de 25Gbps, 40Gbps, i la xarxa de 100 Gbps requerirà nivells de sincronització en els nanosegons per determinar si l'arribada d'un paquet a l'amfitrió A es va produir abans de l'arribada d'un altre paquet a l'amfitrió B. En una xarxa de 10Gbps, els paquets només poden arribar a 67 nanosegons; a majors velocitats això el nombre és considerablement més petit. Mentre que s'apliquen els primers centres de dades PTP en general es troba en el sector financer, moltes altres aplicacions estan reclamant la necessitat de qualitats més altes de sincronització del que es pot aconseguir amb NTP. . D'acord amb elque requereix IEEE que tots els protocols siguin revisat i renovat cada cinc anys, el grup de treball IEEE-1588 està discutint noves funcions que poden ser present a la versió 3 del protocol. Un cop el nou estàndard ha estat aprovat seguirà per veure si els proveïdors de maquinari i programari segueixen.
+    
+\end{itemize}
+
+\section{Assessment}
+
+En la meva opinió el text ha sigut de fàcil lectura i fàcil de comprendre, tot i que una mica llarg, tot i així també es un text molt interessant sobre un problema penso que no tant conegut.
+
+\end{document}
+
+
+
