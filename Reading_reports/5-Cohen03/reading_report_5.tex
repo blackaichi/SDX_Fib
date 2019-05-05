@@ -1,0 +1,90 @@
+\documentclass[a4paper, 10pt]{article}
+
+\usepackage[utf8]{inputenc}
+
+\title{Reading Report: Cohen03}
+\author{\textbf{Eric Casanovas}}
+\date{\normalsize\today{}}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  Upload your report in PDF format.
+  
+  Use this LaTeX template to format the report, keeping the proposed headers.
+  
+	The length of the report must not exceed \textbf{5 pages}.
+\end{center}
+
+\section{Summary}
+
+Aquest document es un paper o un extracte d'un llibre escrit per Bram Cohen el 22 de maig del 2003.
+
+\begin{enumerate}
+    \item \textbf{What BitTorrent Does}\\
+    Quan un fitxer està disponible fent servir HTTP tot el cost recau sobre el host. En canvi amb BitTorrent, quan algú descarrega quelcom, també pujen parts d'aquest fitxer, fet que fa que es redistribueixi el cost de pujada.
+    Es complicat fer-ho a gran escala degut a que provocaria overheads molt grans, nomes el calcular quines parts van a quins peers ja es molt costos. També trobem problemes com que els peers estan conectat durant poques hores o minuts, i hem d'aconseguir que la suma de pujades dels peers sigui igual a la de baixada, cosa que intentarem aconseguir limitant la baixada en funcio de la pujada aportada a la xarxa.
+    \begin{enumerate}
+        \item[1.1] BitTorrent Interface \\
+        Es tant facil com clickar un link i guardar el fitxer a un lloc del sistema i bittorrent ja descarregara i anira pujant parts del fitxers als altres peers.
+        \item[1.2] Deployment \\
+        El fet de fer servir bitTorrent ho decideix qui te el fitxer. Frequentment els que el descarreguen tanquen l'aplicació un cop finalitzada la descarrega i aixo no es una forma polite de fer servir BT.
+    \end{enumerate}
+    
+    \item \textbf{Technical Framework}
+    \begin{enumerate}
+        \item[2.1] Publishing Content
+        Cal publicar un fitxer .torrent amb informació del fitxer (mida, hash, nom i URL on es troba el fitxer. Trackers ajuden als downloaders a trobarse i aquests es comuniquen via HTTP per demanar informació sobre la seva descarrega. Els requisits de l’amplada de banda del rastrejador i del servidor web són
+        molt baix, mentre que la seed ha d’enviar almenys una
+        còpia completa del fitxer original.
+        \item[2.2] Peer Distribution
+        Tots els problemes logistics sobre el fitxer han de ser arreglats pels peers, ja que els trackers l'unic que fan es comunicar els peers. Pero els trackers son la unica forma de que els peers trobin altres peers.
+        Per saber que té cada peer BT talla els fitxers en paquets de mida definida (tipicament 256KB) i per verificar la integritat del paquet fa servir SHA-1. Els peers continuament descarreguen parts dels peers que poden, pero a vegades no poden continuar descarregant perque els peers que te a l'abast no tenen el que necesita.
+        \item[2.3] Pipelining
+        Mentre transferim per TCP es important tenir varis requests pendents per evitar un delay entre peces. BT facilita aixo pertint els paquets en subpaquets, nomalment de 16KB, i cada vegada que arriba una peça se'n demana la següent.
+        \item[2.4] Piece Selection
+        Es important seleccionar bé les peces per tenir una bona performance. 4 exemples d'algoritmes:
+        \begin{itemize}
+            \item Strict Priority
+            Si es demana un subpaquet, es demanaran els subpaquets que faltin del mateix paquet abans que els d'un altre paquet.
+            \item Rarest First
+            Selecciona el paquet que menys peers tenen primer. Això ens permet evitar el risc de que una part del fitxer deixi d'estar available pels peers.
+            \item Random First Piece
+            Selecciona el primer paquet de forma aleatoria i despres fer servir el Rarest First. Aixo permet que la primera peça sigui mes rapida d'obtenir i pugui començar la pujada abans.
+            \item Endgame Mode
+            Pot donarse que una peça tingui un transfer rate força baix i aixo no es un problema al mig del fitxer pero si al final. Per tant el que fem es demanar a tots els peers els subpaquets que falten al final i descartar els subpaquets que triguin mes a arribar (perque arribaran repetits) aixi evitem un llarg temps al final de la descarrega.
+        \end{itemize}
+    \end{enumerate}
+    
+    \item \textbf{Choking Algorithms}\\
+    Choking es una aturada temporal de la pujada tot i que pot donarse una baixada. Choking Algotithm no es un protocol de xarxa de BT pero si necessari per una bona performance.
+    \begin{enumerate}
+        \item[3.1] Pareto Efficiency
+        Algoritme d'optimització local que intenta millorar la pujada/baixada entre dos parells. Per exemple 2 parells tenen mala pujada/baixada entre ells buscar-se uns altres per millorar la seva pujada/baixada.
+        \item[3.2] BitTorrent’s Choking Algorithm
+        Fa que cada 10 segons es calculi el download rate i s'assignin peers per evitar una perdua de recursos. 10 segons es suficient per a que TCp pugui augmentar el seu temps de transferencia.
+        \item[3.3] Optimistic Unchoking
+        Pujar als parells que ofereixen el millor download rate no tindriem cap mètode per descobrir si les connexions actuals no utilitzades són millors que les que s’utilitzen. BT fa servir un parell que no conta pel download rate i aixi saber si s'ha de canviar de parells o no.
+        \item[3.4] Anti-snubbing
+        De vegades un peer serà "ofegat" per tots els seus peers cosa que farà que disminueixi la seva download rate fins que faci efecte l'Optimistic Unchoking. Si no es rep cap paquet d'un peer durant un minut tampoc se li enviara cap paquet fins que l'Optimistic Unchoking faci la seva feina.
+        \item[3.5] Upload Only
+        Quan s'ha finalitzat la descarrega ja no ens calen els download rates, llavors unicament es centra en fer upload als peers que ho necessitin preferint als peers que ningu esta fent upload.
+    \end{enumerate}
+    
+    \item \textbf{Real World Experience}\\
+    BitTorrent no només ja està implementat, sinó que és àmpliament
+    desplegat. Els desplegaments més grans coneguts han tingut més de mil descarregadors simultanis.
+    El coll de botella d’escala actual (que realment no s’ha assolit) sembla ser l’amplada d’amplada de banda del seguidor. Actualment, es tracta d’una mil·lèsima part de l’ample de banda que s’utilitza, i algunes extensions de protocol menors el faran fins a deu
+    mil·lèsima
+\end{enumerate}
+
+\section{Assessment}
+
+En la meva opinió el text ha sigut de fàcil lectura i fàcil de comprendre, a mes a mes es un text molt interessant i s'hauria de seguir ficant els següents cursos.
+
+\end{document}
+
+
+
