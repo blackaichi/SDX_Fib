@@ -1,2 +1,4 @@
 git
 Practicar_Erlang
+*.beam
+*.png

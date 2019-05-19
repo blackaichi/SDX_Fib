@@ -1,0 +1,12 @@
+stabilize(Succ) (obtenir info)
+	n envia {request,self()} a ns
+	ns contesta amb {status,np} a n
+
+stabilize(Pred,MyKey,Succ) (mirar si estas entre mitg)
+
+N2 = node4:start(2).
+P = chordy:connect(N2). (UN cop hi hagui el store)
+P ! {add,2,2}
+N2 ! probe (test)
+test (automatitzar testing)
+

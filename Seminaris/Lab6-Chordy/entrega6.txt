@@ -1,0 +1,4 @@
+Open Questions:
+What are the pros and cons of a more frequent stabilizing procedure.
+Pros: major consistencia del sistema.
+Cons: poca escalabilitat.

@@ -1,0 +1,16 @@
+leader fara de sequenciador
+
+el slave fara redirect de missatges del worker (mcast)
+
+SI el worker es vol unir utilitza el missatge join via slave (el leader decideix si accepta o no, si accepta es fa un canvi de vista
+
+
+si el lider cau en meitat d'un msg multicast es reenvia
+
+demo:
+
+groupy:start(gms1,1000).
+
+
+gms2 -> fallades de procs (es desincronitzen)
+gms3 -> fallades de procs pero es manté la sincronització (mantenim num de sequencia)

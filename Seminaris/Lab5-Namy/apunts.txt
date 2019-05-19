@@ -1,0 +1,41 @@
+	Varies instancies erlang
+construir espai de noms
+root -> server:start()
+edu
+upc
+hosts -> host:start(www(nom domini),www(nom registre),{server, 'upc@127.0.0.1});
+
+
+cada server->
+server:start(edu,{server, 'root@127.0.0.1'})
+
+
+client -> 
+resolver:start({server, 'root@127.0.0.1});
+//start client
+namy:ping([www,upc,edu],resolver);
+
+
+//PART 1:
+1.1 --> OK!
+1.2 --> OK! (sembla)
+1.3 --> Amb el host www down no rebem resposta al ping. (OK!)
+1.4 --> Ara en comptes de no rebre resposta, rebem un missatge que diu "unknown host" (OK!).
+
+//PART 2:
+2.1 --> Al reiniciar el host amb una ttl de 120 sec, el resolver conté a la caché l'antiga resolució del host i per tant intenta resoldre una direcció invalida. Hauriem de netejar les cachés aquelles que contenen el nom resolt de qui hagi caigut. Si cau www, netejar la de UPC, si cau UPC, netejar la de EDU etc. I NETEJAR SEMPRE LA DEL RESOLVER.
+2.2 --> 
+	AMOUNT OF MESSAGES --> 
+		WITHOUT CACHE
+			2(D+1)
+			Client-->Resolver-->root-->edu-->upc-->www i de tornada.
+
+		WITH CACHE
+
+		Client-->Resolver
+			2 Minim + 1 peticio a un servidor cada F segons, i si F és constant, llavors quan T és 0, hem de resoldre de nou la petició de manera iterativa. Creiem que seria alguna cosa així: 
+				2+((T/F)*(2D))
+2.3 --> Purge implementat amb la punta la polla.
+2.4 --> 
+
+//PURGE -> HAY QUE USAR EL LOOKUP i BORRAR NOMES LES ENTRADES INVALIDES PER TTL
