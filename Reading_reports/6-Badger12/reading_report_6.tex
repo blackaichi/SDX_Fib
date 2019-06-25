@@ -1,0 +1,80 @@
+\documentclass[a4paper, 10pt]{article}
+
+\usepackage[utf8]{inputenc}
+
+\title{Reading Report: Badger12}
+\author{\textbf{Eric Casanovas}}
+\date{\normalsize\today{}}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  Upload your report in PDF format.
+  
+  Use this LaTeX template to format the report, keeping the proposed headers.
+  
+	The length of the report must not exceed \textbf{5 pages}.
+\end{center}
+
+\section{Summary}
+    Aquest document es una publicació del U.S. deppartament of commerce sobre el cloud computing.
+    
+    El cloud computing pot generar molts beneficis a la societat i a les empreses però també té els seus inconvenients. Els principals inconvenients són les següents:
+\begin{itemize}
+    \item \textbf{Computing Performance}\\
+    Les aplicacions necessiten diferents tipus de rendiments, per exemple un correu electronic en necessita poc i un control industrial de màquines en temps real necessita molt. Hem de tenir en compte aquests 4 factors:
+    \begin{itemize}
+        \item Latencia: Temps que triga un sistema quan processa una request.
+        \item Sincronització de dades offline: Es complicat accedir a les dades sense connexio per aixo s'ha de tenir un control de version i una colaboració del grup.
+        \item Programació escalable: Explotar la paralelitzacio que ens permet el cloud i aixi tenir una millor performace al nostre sistema tot i que calgui retornar a dissenyar algunes aplicacions.
+        \item Gestió emmagatzemament de dades: Per guardar quelcom al cloud hem de complir que tinguem emmagatzematge extra sota demanda, saber on estan fisicament les dades, verificar que es van esborrar les dades, poder desfer de manera segura l'emmagatzematge de dades i administrar el control d'acces a aquestes dades.
+    \end{itemize}
+    
+    \item \textbf{Cloud Reliability}\\
+    La fiabilitat d'un sistema es complicada de predir ja que per parts podriem saber mes o menys la seva fiabilitat pero quan juntem tot es gairebé impossible calcular-la. Tot i aixi podem tractar 3 punts importants sobre fiabilitat:
+    \begin{itemize}
+        \item Dependencia de xarxa: El fet de tenir serveis al cloud fa que constantment el sistema hagi d'estar connectat a internet, pero no sempre es possible degut a limitacions que tenim per conectarnos a la xarxa, ja sigui per estar a un metro o a un avio per exemple. També hem de tenir en compte possibles atacs a les infraestructures o fins i tot causes naturals com podria ser un cable de fibra optica danyat degut a un terratremol.
+        \item Interrupcions del proveidor de cloud: El cloud no sempre esta operatiu per aixo hem de tenir en compte quines alternatives podem tenir en cas d'emergencia i quan temps podem tolerar d'interrupcio per a que no tinguem un problema greu.
+        \item Processament critic de la seguretat: Normalment controlades pel govern, ja podrien ser sistemes de control d'avions o de materials perillosos. No es recomana en cap cas fer servir el cloud degut a que un error podria suposar la perdua de vides humanes.
+    \end{itemize}
+    
+    \item \textbf{Economic Goals}\\
+    Fer servir el cloud pot suposar un abaratament de costos per un negoci tot i que també s'ha de tenir en compte que pot tenir riscos economics.
+    \begin{itemize}
+        \item Risc continuitat empresarial: Cal tenir en compte que els consumidors depenen de la provisio dels serveis del nuvol i es podria donar una aturada comercial. Per aixo cal estar previstos per mitigar aquest risc.
+        \item Avaluació del contracte de servei: Cal tenir en compte els contractes de servei amb l'empresa del cloud per saber quina es millor pel model de negoci.
+        \item Portabilitat de les càrregues de treball: Es basa en que un consumidor ha de tenir una facil migració de carrega de treball d'un proveidor a un altre sota demanda. La portabilitat es basa en interfícies i formats de dades estandarditzats com per exemple TCP, XML, WSDL...
+        \item Interoperabilitat entre proveïdors de núvols: Per operacions de transferir maquines virtuals i dades entre proveidors calen formats estandards entre proveidors.
+        \item Recuperació de desastres: Cal tenir en compte els possibles desastres que puguin ocorrer i tenir les dades distribuides geograficament i advocats en cas de robatori de informacio.
+    \end{itemize}
+    
+    \item \textbf{Compliance}\\
+    Quan les dades o el processament es traslladen a un núvol, el consumidor conserva la responsabilitat final del compliment, però el proveïdor (que té accés directe a les dades) pot estar en la millor posició per fer complir les normes de compliment.
+    \begin{itemize}
+        \item Falta de visibilitat: Falta de visibilitat es un problema pels consumidors ja que no saben si les dades estan sent tractades d'una manera adequada i segura.
+        \item Ubicacio dades fisiques: Cal tenir en compte on estan montats els data centers per complir les lleis que apliquin en aquell terrotori.
+        \item Jurisdiccio i regulacio: Els consumidors haurien de demanar garanties als proveidors per ajudar a complir les regulacions pertinents, aixo pot ser una mica complicat degut a que els proveidors no ofereixen visibilitat sobre certs detalls.
+        \item Support for Forensics: Es responsabilitat del consumidor i proveidor per saber que ha passat i intentar recuperar el que es pogues.
+    \end{itemize}
+    
+    \item \textbf{Information Security}\\
+     Una organització que posseeix i gestiona les seves operacions de TI normalment prendrà mesures per la seva seguretat de les dades com per exemple, controlar qui pot tenir acces a les dades i qui pot modificarles, controls físics relacionats amb la protecció dels suports d’emmagatzematge i controls tècnics per a la gestió d'identitats i accessos.
+    \begin{itemize}
+        \item Risc de revelació de dades: S'emmagatzemarà la informació sensible i sense sentit en directoris separats d'un sistema. D'aquesta manera, s'espera que es pugui gestionar amb cura la informació confidencial per evitar la distribució no desitjada.
+        \item Privacitat: La privadesa aborda la confidencialitat de les dades per a entitats específiques, com ara els consumidors o altres persones la informació que es processa en un sistema
+        \item Integritat: Els clouds requereixen proteccio contra el sabotatge i cal distingir entre consumidors, proveidors i administradors.
+        \item Multi-tenancy: El cloud computing rep eficiències econòmiques significatives a partir de l’intercanvi de recursos al costat del proveïdor. 
+        \item Buscadors: Es la forma facil pel consumidor per accedir al nuvol, tot i no ser gaire segur es el que mes es fa servir. er generar mes confiança podem accedir via gateways o firewalls.
+        \item Suport de maquinari per a la confiança: En alguns escenaris, el suport de maquinari pot permetre als consumidors entendre la fiabilitat dels sistemes remots.
+        \item Gestió de claus: La protecció adequada de les claus criptogràfiques dels consumidors sembla requerir una certa cooperació entre els proveïdors de núvols. És un tema obert sobre com utilitzar criptografia amb seguretat des d’un núvol.
+    \end{itemize}
+\end{itemize}
+
+
+\section{Assessment}
+
+En la meva opinió el text ha sigut de fàcil lectura i fàcil de comprendre, a mes a mes es un text molt interessant i s'hauria de seguir ficant els següents cursos.
+
+\end{document}
